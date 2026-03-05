@@ -25,10 +25,6 @@ function showLayer(id) {
   const el = document.getElementById(id);
   if (el) {
     el.style.display = 'flex';
-    // 重置动画
-    el.style.animation = 'none';
-    el.offsetHeight; // reflow
-    el.style.animation = '';
   }
 }
 function hideAllSettings() {
@@ -39,12 +35,10 @@ function hideAllSettings() {
 
 /* 设置App入口 — 找到所有设置App图标并绑定 */
 function bindSettingsEntry() {
-  // dock 设置按钮
   const dockSettings = document.getElementById('dock-settings');
   if (dockSettings) {
     dockSettings.addEventListener('click', () => showLayer('settings-root'));
   }
-  // 主屏两个App中的设置
   document.querySelectorAll('[data-app="settings"]').forEach(el => {
     el.addEventListener('click', () => showLayer('settings-root'));
   });
@@ -102,7 +96,6 @@ function renderApiArchiveList() {
       <button class="api-archive-del" data-del="${idx}">删除</button>`;
     container.appendChild(row);
   });
-  // 点击填充
   container.querySelectorAll('.api-archive-info').forEach(info => {
     info.addEventListener('click', function () {
       const arc = apiArchives[parseInt(this.dataset.idx)];
@@ -113,7 +106,6 @@ function renderApiArchiveList() {
       setApiStatus('');
     });
   });
-  // 删除
   container.querySelectorAll('.api-archive-del').forEach(btn => {
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
@@ -134,7 +126,6 @@ function setApiModelVisible(show) {
   document.getElementById('api-model-confirm-btn').style.display = show ? '' : 'none';
 }
 
-// 拉取模型
 document.getElementById('api-fetch-models-btn').addEventListener('click', async function () {
   const url = document.getElementById('api-url').value.trim();
   const key = document.getElementById('api-key').value.trim();
@@ -142,19 +133,15 @@ document.getElementById('api-fetch-models-btn').addEventListener('click', async 
     setApiStatus('请先填写 API 地址', 'error');
     return;
   }
-
   setApiStatus('正在请求模型列表…');
   this.disabled = true;
-
   try {
     const endpoint = url.replace(/\/$/, '') + '/models';
     const headers = { 'Content-Type': 'application/json' };
     if (key) headers['Authorization'] = 'Bearer ' + key;
-
     const res = await fetch(endpoint, { headers });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const json = await res.json();
-
     let models = [];
     if (Array.isArray(json.data)) {
       models = json.data.map(m => m.id || m.name).filter(Boolean);
@@ -163,9 +150,7 @@ document.getElementById('api-fetch-models-btn').addEventListener('click', async 
     } else if (Array.isArray(json)) {
       models = json.map(m => m.id || m.name).filter(Boolean);
     }
-
     if (!models.length) throw new Error('未获取到模型列表');
-
     const sel = document.getElementById('api-model-select');
     sel.innerHTML = models.map(m => `<option value="${m}">${m}</option>`).join('');
     setApiModelVisible(true);
@@ -178,14 +163,12 @@ document.getElementById('api-fetch-models-btn').addEventListener('click', async 
   }
 });
 
-// 确认选择模型
 document.getElementById('api-model-confirm-btn').addEventListener('click', function () {
   currentApiModel = document.getElementById('api-model-select').value;
   sSave('apiCurrentModel', currentApiModel);
   setApiStatus('已选择模型：' + currentApiModel, 'success');
 });
 
-// 保存配置
 document.getElementById('api-save-btn').addEventListener('click', function () {
   const name = document.getElementById('api-config-name').value.trim() ||
     '配置' + (apiArchives.length + 1);
@@ -195,7 +178,6 @@ document.getElementById('api-save-btn').addEventListener('click', function () {
     setApiStatus('API 地址不能为空', 'error');
     return;
   }
-
   const existing = apiArchives.findIndex(a => a.name === name);
   if (existing >= 0) {
     apiArchives[existing] = { name, url, key };
@@ -208,7 +190,6 @@ document.getElementById('api-save-btn').addEventListener('click', function () {
   setApiStatus('配置已保存', 'success');
 });
 
-// 恢复上次激活配置
 (function restoreApiConfig() {
   const active = sLoad('apiActiveConfig', null);
   if (!active) return;
@@ -230,7 +211,6 @@ function applyWallpaper(src) {
   document.body.style.backgroundImage = src ? `url(${src})` : '';
   document.body.style.backgroundSize = src ? 'cover' : '';
   document.body.style.backgroundPosition = src ? 'center' : '';
-
   const preview = document.getElementById('wallpaper-preview');
   if (preview) {
     preview.style.backgroundImage = src ? `url(${src})` : '';
@@ -267,15 +247,15 @@ document.getElementById('wallpaper-clear-btn').addEventListener('click', functio
 
 /* ---- App 图标替换 ---- */
 const iconRegistry = [
-  { key: 'dock-chat', label: 'Dock · 聊天', selector: '#dock-chat .app-icon' },
-  { key: 'dock-home', label: 'Dock · 主页', selector: '#dock-home .app-icon' },
+  { key: 'dock-chat',     label: 'Dock · 聊天', selector: '#dock-chat .app-icon' },
+  { key: 'dock-home',     label: 'Dock · 主页', selector: '#dock-home .app-icon' },
   { key: 'dock-settings', label: 'Dock · 设置', selector: '#dock-settings .app-icon' },
-  { key: 'app2-chat', label: '聊天 App', selector: '[data-app="chat"] .app-icon' },
-  { key: 'app2-settings', label: '设置 App', selector: '[data-app="settings"] .app-icon' },
-  { key: 'app4-0', label: '音乐', selector: '[data-app="0"] .app-icon' },
-  { key: 'app4-1', label: '相机', selector: '[data-app="1"] .app-icon' },
-  { key: 'app4-2', label: '日历', selector: '[data-app="2"] .app-icon' },
-  { key: 'app4-3', label: '相册', selector: '[data-app="3"] .app-icon' },
+  { key: 'app2-chat',     label: '聊天 App',    selector: '[data-app="chat"] .app-icon' },
+  { key: 'app2-settings', label: '设置 App',    selector: '[data-app="settings"] .app-icon' },
+  { key: 'app4-0',        label: '音乐',        selector: '[data-app="0"] .app-icon' },
+  { key: 'app4-1',        label: '相机',        selector: '[data-app="1"] .app-icon' },
+  { key: 'app4-2',        label: '日历',        selector: '[data-app="2"] .app-icon' },
+  { key: 'app4-3',        label: '相册',        selector: '[data-app="3"] .app-icon' },
 ];
 let customIcons = sLoad('customIcons', {});
 let iconEditKey = '';
@@ -365,14 +345,14 @@ document.getElementById('icon-replace-cancel').addEventListener('click', functio
 
 /* ---- 整体配色 ---- */
 const colorDefs = [
-  { key: '--primary', label: '主色调', default: '#99C8ED' },
-  { key: '--light-blue', label: '亮蓝色', default: '#B3D8F4' },
-  { key: '--mid-blue', label: '中蓝色', default: '#7a9abf' },
-  { key: '--bg', label: '背景色', default: '#F5F5F0' },
-  { key: '--bg2', label: '辅助背景', default: '#F8F9FA' },
-  { key: '--dark-bg', label: '深色背景', default: '#1a1f2e' },
-  { key: '--text-dark', label: '主文字色', default: '#2c3448' },
-  { key: '--text-mid', label: '次文字色', default: '#5a6a80' },
+  { key: '--primary',    label: '主色调',   default: '#99C8ED' },
+  { key: '--light-blue', label: '亮蓝色',   default: '#B3D8F4' },
+  { key: '--mid-blue',   label: '中蓝色',   default: '#7a9abf' },
+  { key: '--bg',         label: '背景色',   default: '#F5F5F0' },
+  { key: '--bg2',        label: '辅助背景', default: '#F8F9FA' },
+  { key: '--dark-bg',    label: '深色背景', default: '#1a1f2e' },
+  { key: '--text-dark',  label: '主文字色', default: '#2c3448' },
+  { key: '--text-mid',   label: '次文字色', default: '#5a6a80' },
   { key: '--text-light', label: '淡文字色', default: '#9aafc4' },
 ];
 let customColors = sLoad('customColors', {});
@@ -394,18 +374,16 @@ function renderColorFields() {
     row.innerHTML = `
       <div class="color-field-label">${def.label}</div>
       <input type="color" class="color-field-input" data-ckey="${def.key}" value="${currentVal}">
-      <input type="text"  class="color-field-hex"   data-hkey="${def.key}" value="${currentVal}" maxlength="7">`;
+      <input type="text" class="color-field-hex" data-hkey="${def.key}" value="${currentVal}" maxlength="7">`;
     container.appendChild(row);
   });
 
-  // 同步 color → hex
   container.querySelectorAll('.color-field-input').forEach(picker => {
     picker.addEventListener('input', function () {
       const hexEl = container.querySelector(`.color-field-hex[data-hkey="${this.dataset.ckey}"]`);
       if (hexEl) hexEl.value = this.value;
     });
   });
-  // 同步 hex → color
   container.querySelectorAll('.color-field-hex').forEach(hexEl => {
     hexEl.addEventListener('input', function () {
       const val = this.value.trim();
@@ -482,11 +460,9 @@ function importJson(file, keys, callback) {
   reader.readAsText(file);
 }
 
-/* 导出全部 */
 document.getElementById('export-all-btn')
   .addEventListener('click', () => downloadJson(collectData(ALL_DATA_KEYS), 'halo9_all_' + Date.now() + '.json'));
 
-/* 导入全部 */
 document.getElementById('import-all-btn')
   .addEventListener('click', () => document.getElementById('import-all-file').click());
 document.getElementById('import-all-file')
@@ -500,11 +476,9 @@ document.getElementById('import-all-file')
     this.value = '';
   });
 
-/* 导出美化 */
 document.getElementById('export-theme-btn')
   .addEventListener('click', () => downloadJson(collectData(THEME_DATA_KEYS), 'halo9_theme_' + Date.now() + '.json'));
 
-/* 导入美化 */
 document.getElementById('import-theme-btn')
   .addEventListener('click', () => document.getElementById('import-theme-file').click());
 document.getElementById('import-theme-file')
@@ -523,7 +497,6 @@ document.getElementById('import-theme-file')
     this.value = '';
   });
 
-/* 清除全部数据 */
 document.getElementById('clear-all-data-btn')
   .addEventListener('click', function () {
     if (!confirm('确定要清除全部本地数据吗？此操作不可恢复！')) return;
@@ -533,7 +506,7 @@ document.getElementById('clear-all-data-btn')
   });
 
 /* ============================================================
-   弹窗遮罩关闭（settings 内新增弹窗）
+   弹窗遮罩关闭
    ============================================================ */
 ['wallpaper-url-modal', 'icon-replace-modal'].forEach(id => {
   const mask = document.getElementById(id);

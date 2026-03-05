@@ -8,12 +8,7 @@
   z-index: 400;
   display: flex;
   flex-direction: column;
-  animation: settingsSlideIn .28s cubic-bezier(.4,0,.2,1);
-}
-
-@keyframes settingsSlideIn {
-  from { transform: translateX(100%); opacity: .6; }
-  to   { transform: translateX(0);    opacity: 1; }
+  /* 移除动画，不再从右侧弹出 */
 }
 
 /* ============================================================
@@ -55,7 +50,7 @@
   flex: 1;
   text-align: center;
   letter-spacing: .04em;
-  margin-right: 32px; /* 抵消返回键宽度 */
+  margin-right: 32px;
 }
 
 /* ============================================================
@@ -249,7 +244,7 @@
   min-height: 16px;
   line-height: 1.5;
 }
-.api-status-text.error { color: #e05c5c; }
+.api-status-text.error   { color: #e05c5c; }
 .api-status-text.success { color: #5cae82; }
 
 /* ============================================================
@@ -263,7 +258,7 @@
   border-bottom: 1px solid rgba(153,200,237,0.14);
 }
 .api-archive-item:first-child { padding-top: 0; }
-.api-archive-item:last-child { border-bottom: none; padding-bottom: 0; }
+.api-archive-item:last-child  { border-bottom: none; padding-bottom: 0; }
 
 .api-archive-info {
   flex: 1;
@@ -321,7 +316,7 @@
   transition: background .15s;
 }
 .icon-replace-row:first-child { padding-top: 0; }
-.icon-replace-row:last-child { border-bottom: none; padding-bottom: 0; }
+.icon-replace-row:last-child  { border-bottom: none; padding-bottom: 0; }
 
 .icon-replace-preview {
   width: 40px;
@@ -380,4 +375,14 @@
   background: var(--bg2);
   outline: none;
   font-family: inherit;
+}
+
+/* ============================================================
+   设置层内的弹窗层级修正
+   确保 wallpaper-url-modal 和 icon-replace-modal
+   显示在 z-index:400 的设置层之上
+   ============================================================ */
+#wallpaper-url-modal,
+#icon-replace-modal {
+  z-index: 500;
 }
