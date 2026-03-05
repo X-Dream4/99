@@ -36,7 +36,7 @@ html, body {
 }
 
 /* ============================================================
-   顶部状态栏（时间 + 水印）—— fixed 贴顶，占满 padding-top 区域
+   顶部状态栏
    ============================================================ */
 #status-bar {
   position: fixed;
@@ -54,7 +54,7 @@ html, body {
 }
 
 #status-time {
-  font-size: 6px;
+  font-size: 9px;
   font-weight: 600;
   color: var(--text-dark);
   letter-spacing: .03em;
@@ -63,7 +63,7 @@ html, body {
 }
 
 #status-watermark {
-  font-size: 5.5px;
+  font-size: 8px;
   font-weight: 500;
   color: var(--text-mid);
   letter-spacing: .14em;
@@ -141,7 +141,7 @@ html, body {
   border-radius: 22px;
   box-shadow: 0 4px 22px rgba(100,150,200,0.16);
   border: 1.5px solid rgba(153,200,237,0.26);
-  padding: 7px 18px;
+  padding: 10px 18px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -164,37 +164,30 @@ html, body {
 #page1-inner {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 8px 14px 0;
+  gap: 0;
+  padding: 10px 14px 0;
   flex: 1;
   margin-top: 18px;
 }
 
 /* ============================================================
-   顶部行：日期胶囊 + 消息观赏
+   日期+倒计时胶囊（独立组件）
    ============================================================ */
-#top-row {
-  display: flex;
-  gap: 11px;
-  align-items: stretch;
-}
-
-/* --- 日期+倒计时胶囊 --- */
 #date-capsule {
-  flex: 1.2;
   background: #fff;
   border-radius: var(--radius-card);
   box-shadow: var(--shadow);
   display: flex;
   overflow: hidden;
-  min-height: 108px;
+  min-height: 114px;
   border: 1.5px solid rgba(153,200,237,0.18);
+  margin-bottom: 14px;
 }
 
 #date-left {
   flex: 1;
   background: linear-gradient(145deg,#dbeeff 0%,#edf5fb 100%);
-  padding: 11px 9px;
+  padding: 14px 11px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -225,7 +218,7 @@ html, body {
 #countdown-right {
   flex: 1;
   background: var(--bg);
-  padding: 11px 9px;
+  padding: 14px 11px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -269,22 +262,22 @@ html, body {
 }
 
 /* ============================================================
-   消息观赏组件
+   消息观赏组件（独立）
    ============================================================ */
 #msg-widget {
-  flex: 1;
   background: var(--glass);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow);
   border: 1.5px solid rgba(153,200,237,0.22);
-  padding: 10px 10px 12px;
+  padding: 13px 12px 15px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-height: 108px;
+  gap: 10px;
+  min-height: 110px;
   justify-content: center;
+  margin-bottom: 14px;
 }
 
 .msg-row {
@@ -316,7 +309,7 @@ html, body {
 .msg-bubble {
   background: #fff;
   border-radius: 4px 12px 12px 12px;
-  padding: 5px 9px;
+  padding: 6px 10px;
   font-size: 11px;
   color: var(--text-dark);
   line-height: 1.5;
@@ -331,27 +324,30 @@ html, body {
    ============================================================ */
 #mid-row {
   display: flex;
-  gap: 11px;
+  gap: 13px;
   align-items: flex-start;
 }
 
 #left-col {
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 0;
   flex: 1.15;
 }
 
-/* --- 用户卡片 --- */
+/* ============================================================
+   用户卡片（独立组件）
+   ============================================================ */
 #user-card {
   background: #fff;
   border-radius: var(--radius-card);
   box-shadow: var(--shadow);
-  padding: 12px 12px 10px;
+  padding: 14px 13px 12px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   border: 1.5px solid rgba(153,200,237,0.15);
+  margin-bottom: 13px;
 }
 
 #user-avatar {
@@ -382,13 +378,16 @@ html, body {
   font-style: italic;
 }
 
-/* --- 4个App --- */
+/* ============================================================
+   4个App（独立组件）
+   ============================================================ */
 #four-apps {
   border-radius: var(--radius-card);
-  padding: 10px 6px 8px;
+  padding: 12px 6px 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px 6px;
+  gap: 12px 8px;
+  margin-bottom: 0;
 }
 
 /* ============================================================
@@ -397,18 +396,23 @@ html, body {
 #right-col {
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 0;
   flex: 1;
 }
 
-/* --- 两个App --- */
+/* ============================================================
+   两个App（独立组件）
+   ============================================================ */
 #two-apps {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
+  margin-bottom: 13px;
 }
 
-/* --- 图片轮播 --- */
+/* ============================================================
+   图片轮播（独立组件）
+   ============================================================ */
 #carousel-widget {
   border-radius: var(--radius-card);
   overflow: hidden;
@@ -417,7 +421,8 @@ html, body {
   cursor: pointer;
   position: relative;
   border: 1.5px solid rgba(153,200,237,0.18);
-  min-height: 88px;
+  min-height: 92px;
+  margin-bottom: 13px;
 }
 
 #carousel-img {
@@ -451,12 +456,13 @@ html, body {
 }
 
 /* ============================================================
-   文字条组件
+   文字条组件（独立）
    ============================================================ */
 #text-bars {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  margin-bottom: 0;
 }
 
 .text-bar {
@@ -464,9 +470,9 @@ html, body {
   background: rgba(179, 216, 244, 0.13);
   border: 1px solid rgba(153, 200, 237, 0.28);
   border-radius: var(--radius-cap);
-  padding: 5px 14px;
+  padding: 7px 14px;
   cursor: pointer;
-  min-height: 28px;
+  min-height: 30px;
   display: flex;
   align-items: center;
   transition: background .18s, border-color .18s;
@@ -512,7 +518,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
@@ -585,7 +591,7 @@ html, body {
   border-radius: 22px 22px 0 0;
   width: 100%;
   max-width: 480px;
-  padding: 22px 18px 44px;
+  padding: 24px 20px 48px;
   max-height: 82dvh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -595,7 +601,7 @@ html, body {
   font-size: 15px;
   font-weight: 600;
   color: var(--dark-bg);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .modal-hint {
@@ -615,7 +621,7 @@ html, body {
   outline: none;
   resize: vertical;
   font-family: inherit;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   transition: border-color .2s;
   -webkit-appearance: none;
   appearance: none;
@@ -660,7 +666,7 @@ html, body {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 /* --- 倒计时条目 --- */
@@ -670,8 +676,8 @@ html, body {
   gap: 10px;
   background: var(--bg2);
   border-radius: 11px;
-  padding: 9px 11px;
-  margin-bottom: 7px;
+  padding: 11px 13px;
+  margin-bottom: 9px;
 }
 
 .cd-item-info {
@@ -704,8 +710,8 @@ html, body {
 .add-cd-section {
   background: var(--bg2);
   border-radius: 13px;
-  padding: 13px 11px 10px;
-  margin-top: 6px;
+  padding: 14px 13px 12px;
+  margin-top: 8px;
 }
 
 .add-cd-title {
@@ -731,7 +737,7 @@ html, body {
 .edit-tab-row {
   display: flex;
   gap: 7px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .edit-tab {

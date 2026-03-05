@@ -1,455 +1,408 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HALO·九</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="settings.css">
-</head>
-<body>
+/* ============================================================
+   settings.css — 设置 App 专属样式
+   ============================================================ */
 
-<!-- 页面横滑容器 -->
-<div id="pages-wrap">
+/* ---- 设置层覆盖容器（全屏覆盖） ---- */
+.settings-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: var(--bg, #F5F5F0);
+  flex-direction: column;
+  overflow: hidden;
+}
 
-  <!-- 第一页 -->
-  <div class="page" id="page1">
+/* ---- 顶部导航栏 ---- */
+.settings-topbar {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  padding: 0 16px;
+  background: rgba(255,255,255,0.92);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(153,200,237,0.22);
+  flex-shrink: 0;
+  position: relative;
+}
 
-    <!-- 顶部状态栏：时间 + 水印 -->
-    <div id="status-bar">
-      <div id="status-time">00:00</div>
-      <div id="status-watermark">MX_4</div>
-    </div>
+.settings-topbar-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dark, #2c3448);
+  letter-spacing: .02em;
+}
 
-    <div id="page1-inner">
+.settings-back-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--primary, #99C8ED);
+  cursor: pointer;
+  padding: 6px 8px 6px 0;
+  line-height: 1;
+  font-family: inherit;
+  -webkit-appearance: none;
+  z-index: 1;
+}
 
-      <!-- 顶部行：日期胶囊 + 消息观赏 -->
-      <div id="top-row">
+/* ---- 设置主列表 ---- */
+.settings-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-        <!-- 日期+倒计时胶囊 -->
-        <div id="date-capsule">
-          <div id="date-left">
-            <div id="date-year-month"></div>
-            <div id="date-day"></div>
-            <div id="date-lunar"></div>
-          </div>
-          <div class="cd-divider"></div>
-          <div id="countdown-right">
-            <div id="cd-label">加载中…</div>
-            <div id="cd-number">—</div>
-            <div id="cd-unit">天</div>
-          </div>
-        </div>
+.settings-item {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 12px rgba(100,140,190,0.09);
+  border: 1.5px solid rgba(153,200,237,0.15);
+  cursor: pointer;
+  transition: background .15s;
+  margin-bottom: 4px;
+}
 
-        <!-- 消息观赏 -->
-        <div id="msg-widget">
-          <div class="msg-row">
-            <img class="msg-avatar" id="msg-avatar-0"
-              src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=luna" alt="">
-            <div class="msg-bubbles" id="msg-bubbles-0">
-              <div class="msg-bubble">你好呀～今天过得怎么样？</div>
-            </div>
-          </div>
-          <div class="msg-row">
-            <img class="msg-avatar" id="msg-avatar-1"
-              src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=nova" alt="">
-            <div class="msg-bubbles" id="msg-bubbles-1">
-              <div class="msg-bubble">HALO·九 已上线 ✨</div>
-            </div>
-          </div>
-        </div>
+.settings-item:active {
+  background: #eaf4fc;
+}
 
-      </div><!-- /top-row -->
+.settings-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-      <!-- 中部行 -->
-      <div id="mid-row">
+.settings-item-icon {
+  font-size: 22px;
+  width: 36px;
+  text-align: center;
+  flex-shrink: 0;
+}
 
-        <!-- 左列：用户卡片 + 4个App -->
-        <div id="left-col">
+.settings-item-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark, #2c3448);
+  margin-bottom: 3px;
+}
 
-          <div id="user-card">
-            <img id="user-avatar"
-              src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=halo9" alt="头像">
-            <div id="user-sig"></div>
-          </div>
+.settings-item-sub {
+  font-size: 11px;
+  color: var(--text-light, #9aafc4);
+}
 
-          <!-- 4个App -->
-          <div id="four-apps">
-            <div class="app-item" data-app="0">
-              <img class="app-icon" src="https://img.icons8.com/fluency/96/music.png" alt="">
-              <div class="app-name">音乐</div>
-            </div>
-            <div class="app-item" data-app="1">
-              <img class="app-icon" src="https://img.icons8.com/fluency/96/camera.png" alt="">
-              <div class="app-name">相机</div>
-            </div>
-            <div class="app-item" data-app="2">
-              <img class="app-icon" src="https://img.icons8.com/fluency/96/calendar--v1.png" alt="">
-              <div class="app-name">日历</div>
-            </div>
-            <div class="app-item" data-app="3">
-              <img class="app-icon" src="https://img.icons8.com/fluency/96/gallery.png" alt="">
-              <div class="app-name">相册</div>
-            </div>
-          </div>
+.settings-item-arrow {
+  font-size: 18px;
+  color: var(--text-light, #9aafc4);
+}
 
-        </div><!-- /left-col -->
+/* ---- 设置内页滚动区 ---- */
+.settings-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px 50px;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
 
-        <!-- 右列：两个App + 图片轮播 + 文字条 -->
-        <div id="right-col">
+/* ---- 分组标题 ---- */
+.settings-section-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-light, #9aafc4);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
 
-          <div id="two-apps">
-            <div class="app-item" data-app="chat">
-              <img class="app-icon" src="https://img.icons8.com/fluency/96/chat.png" alt="">
-              <div class="app-name">聊天</div>
-            </div>
-            <div class="app-item" data-app="settings">
-              <img class="app-icon" src="https://img.icons8.com/fluency/96/settings.png" alt="">
-              <div class="app-name">设置</div>
-            </div>
-          </div>
+.settings-section-title:first-child {
+  margin-top: 4px;
+}
 
-          <!-- 图片轮播 -->
-          <div id="carousel-widget">
-            <img id="carousel-img" src="" alt="" style="opacity:0;">
-            <div id="carousel-placeholder">
-              <div class="plus-icon">＋</div>
-              <div>点击添加图片</div>
-            </div>
-          </div>
+/* ---- 卡片 ---- */
+.settings-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 16px;
+  box-shadow: 0 2px 14px rgba(100,140,190,0.09);
+  border: 1.5px solid rgba(153,200,237,0.15);
+  margin-bottom: 6px;
+}
 
-          <!-- 两条可编辑文字条 -->
-          <div id="text-bars">
-            <div class="text-bar" id="text-bar-0">
-              <span class="text-bar-content" id="text-bar-content-0" data-bar="0"></span>
-              <span class="text-bar-placeholder" id="text-bar-placeholder-0">点击写点什么…</span>
-            </div>
-            <div class="text-bar text-bar-offset" id="text-bar-1">
-              <span class="text-bar-content" id="text-bar-content-1" data-bar="1"></span>
-              <span class="text-bar-placeholder" id="text-bar-placeholder-1">再写一行…</span>
-            </div>
-          </div>
+/* ---- 表单元素 ---- */
+.settings-label {
+  display: block;
+  font-size: 11.5px;
+  color: var(--text-mid, #5a6a80);
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
 
-        </div><!-- /right-col -->
-      </div><!-- /mid-row -->
+.settings-label:first-child {
+  margin-top: 0;
+}
 
-    </div><!-- /page1-inner -->
-  </div><!-- /page1 -->
+.settings-input {
+  width: 100%;
+  border: 1.5px solid var(--light-blue, #B3D8F4);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--text-dark, #2c3448);
+  background: var(--bg2, #F8F9FA);
+  outline: none;
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color .2s;
+  box-sizing: border-box;
+}
 
-  <!-- 第二页 -->
-  <div class="page" id="page2">
-    <div id="page2-inner">
-      <div class="p2-icon">🌙</div>
-      <div>第二页</div>
-      <div style="font-size:11px;margin-top:4px;opacity:.7;">向左滑动返回 · 待更新</div>
-    </div>
-  </div>
+.settings-input:focus {
+  border-color: var(--primary, #99C8ED);
+}
 
-</div><!-- /pages-wrap -->
+/* ---- 按钮行 ---- */
+.settings-row-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
 
-<!-- 分页指示器 -->
-<div id="page-dots">
-  <div class="dot active" data-page="0"></div>
-  <div class="dot" data-page="1"></div>
-</div>
+.settings-btn-primary {
+  background: var(--primary, #99C8ED);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  -webkit-appearance: none;
+  transition: opacity .18s;
+  white-space: nowrap;
+}
 
-<!-- 底部 Dock -->
-<div id="dock">
-  <div class="app-item" id="dock-chat">
-    <img class="app-icon" src="https://img.icons8.com/fluency/96/chat.png" alt="">
-    <div class="app-name">聊天</div>
-  </div>
-  <div class="app-item" id="dock-home">
-    <img class="app-icon" src="https://img.icons8.com/fluency/96/home-page.png" alt="">
-    <div class="app-name">主页</div>
-  </div>
-  <div class="app-item" id="dock-settings">
-    <img class="app-icon" src="https://img.icons8.com/fluency/96/settings.png" alt="">
-    <div class="app-name">设置</div>
-  </div>
-</div>
+.settings-btn-primary:active {
+  opacity: 0.76;
+}
 
-<!-- ===== 弹窗：倒计时编辑 ===== -->
-<div class="modal-mask" id="cd-modal">
-  <div class="modal-box">
-    <div class="modal-title">纪念日 &amp; 倒计时</div>
-    <div id="cd-list"></div>
-    <div class="add-cd-section">
-      <div class="add-cd-title">添加新条目</div>
-      <label>标题</label>
-      <input class="modal-input" id="cd-new-title" placeholder="如：在一起第X天" style="height:38px;resize:none;">
-      <label>目标日期</label>
-      <input class="modal-input" id="cd-new-date" type="date" style="height:38px;">
-      <label>类型</label>
-      <select class="modal-input" id="cd-new-type" style="height:38px;">
-        <option value="anniversary">纪念日（已过天数）</option>
-        <option value="countdown">倒计时（剩余天数）</option>
-      </select>
-      <div class="btn-row">
-        <button class="modal-btn" id="cd-add-btn">添加</button>
-        <button class="modal-btn-ghost" id="cd-close-btn">关闭</button>
-      </div>
-    </div>
-  </div>
-</div>
+.settings-btn-ghost {
+  background: var(--bg2, #F8F9FA);
+  color: var(--text-mid, #5a6a80);
+  border: 1.5px solid var(--light-blue, #B3D8F4);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-appearance: none;
+  white-space: nowrap;
+}
 
-<!-- 弹窗：图片轮播 -->
-<div class="modal-mask" id="carousel-modal">
-  <div class="modal-box">
-    <div class="modal-title">图片轮播</div>
-    <div class="modal-hint">每行一个图片URL，换行添加下一张</div>
-    <textarea class="modal-input" id="carousel-urls" rows="6"
-      placeholder="https://example.com/img1.jpg&#10;https://example.com/img2.jpg"></textarea>
-    <div class="btn-row">
-      <button class="modal-btn" id="carousel-save-btn">确认</button>
-      <button class="modal-btn-ghost" id="carousel-cancel-btn">取消</button>
-    </div>
-  </div>
-</div>
+.settings-btn-danger {
+  background: #fff0f0;
+  color: #e05c5c;
+  border: 1.5px solid #f5c0c0;
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-appearance: none;
+  white-space: nowrap;
+}
 
-<!-- 弹窗：用户头像 -->
-<div class="modal-mask" id="avatar-modal">
-  <div class="modal-box">
-    <div class="modal-title">更换头像</div>
-    <div class="edit-tab-row">
-      <button class="edit-tab active" data-avatar-tab="url">输入URL</button>
-      <button class="edit-tab" data-avatar-tab="local">本地上传</button>
-    </div>
-    <div id="avatar-url-panel">
-      <input class="modal-input" id="avatar-url-input" placeholder="输入图片URL…" style="height:40px;resize:none;">
-    </div>
-    <div id="avatar-local-panel" style="display:none;">
-      <input type="file" id="avatar-file-input" accept="image/*"
-        style="margin-bottom:10px;font-size:12px;color:var(--text-mid);width:100%;">
-    </div>
-    <div class="btn-row">
-      <button class="modal-btn" id="avatar-confirm-btn">确认</button>
-      <button class="modal-btn-ghost" id="avatar-cancel-btn">取消</button>
-    </div>
-  </div>
-</div>
+/* ---- 描述文字 ---- */
+.settings-desc {
+  font-size: 12px;
+  color: var(--text-light, #9aafc4);
+  line-height: 1.6;
+}
 
-<!-- 弹窗：签名 -->
-<div class="modal-mask" id="sig-modal">
-  <div class="modal-box">
-    <div class="modal-title">编辑签名</div>
-    <textarea class="modal-input" id="sig-input" rows="3" placeholder="输入你的签名…"></textarea>
-    <div class="btn-row">
-      <button class="modal-btn" id="sig-confirm-btn">确认</button>
-      <button class="modal-btn-ghost" id="sig-cancel-btn">取消</button>
-    </div>
-  </div>
-</div>
+/* ---- API 状态文字 ---- */
+.api-status-text {
+  font-size: 12px;
+  color: var(--text-mid, #5a6a80);
+  margin-top: 8px;
+  min-height: 18px;
+}
 
-<!-- 弹窗：消息观赏编辑 -->
-<div class="modal-mask" id="msg-modal">
-  <div class="modal-box">
-    <div class="modal-title">编辑消息气泡</div>
-    <div class="edit-tab-row">
-      <button class="edit-tab active" data-msg-tab="url">头像URL</button>
-      <button class="edit-tab" data-msg-tab="local">本地上传</button>
-    </div>
-    <div id="msg-url-panel">
-      <input class="modal-input" id="msg-avatar-url-input"
-        placeholder="头像图片URL（留空不更改）…" style="height:40px;resize:none;">
-    </div>
-    <div id="msg-local-panel" style="display:none;">
-      <input type="file" id="msg-file-input" accept="image/*"
-        style="margin-bottom:10px;font-size:12px;color:var(--text-mid);width:100%;">
-    </div>
-    <div class="modal-hint" style="margin:10px 0 5px;">消息内容（每行一条气泡）</div>
-    <textarea class="modal-input" id="msg-content-input" rows="4"
-      placeholder="第一条消息&#10;第二条消息"></textarea>
-    <div class="btn-row">
-      <button class="modal-btn" id="msg-confirm-btn">确认</button>
-      <button class="modal-btn-ghost" id="msg-cancel-btn">取消</button>
-    </div>
-  </div>
-</div>
+.api-status-text.success {
+  color: #4caf84;
+}
 
-<!-- 弹窗：文字条编辑 -->
-<div class="modal-mask" id="textbar-modal">
-  <div class="modal-box">
-    <div class="modal-title">编辑文字条</div>
-    <textarea class="modal-input" id="textbar-input" rows="2"
-      placeholder="输入文字内容…" style="resize:none;"></textarea>
-    <div class="btn-row">
-      <button class="modal-btn" id="textbar-confirm-btn">确认</button>
-      <button class="modal-btn-ghost" id="textbar-cancel-btn">取消</button>
-    </div>
-  </div>
-</div>
+.api-status-text.error {
+  color: #e05c5c;
+}
 
-<!-- ===================== 设置App 覆盖层 ===================== -->
+/* ---- API 存档条目 ---- */
+.api-archive-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg2, #F8F9FA);
+  border-radius: 11px;
+  padding: 12px 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background .15s;
+}
 
-<!-- 设置主列表页 -->
-<div id="settings-root" class="settings-layer" style="display:none;">
-  <div class="settings-topbar">
-    <button class="settings-back-btn" id="settings-root-close">&#8592;</button>
-    <div class="settings-topbar-title">设置</div>
-  </div>
-  <div class="settings-list">
-    <div class="settings-item" id="goto-api">
-      <div class="settings-item-left">
-        <div class="settings-item-icon">🔌</div>
-        <div class="settings-item-info">
-          <div class="settings-item-title">API 设置</div>
-          <div class="settings-item-sub">配置模型接口与密钥</div>
-        </div>
-      </div>
-      <div class="settings-item-arrow">›</div>
-    </div>
-    <div class="settings-item" id="goto-theme">
-      <div class="settings-item-left">
-        <div class="settings-item-icon">🎨</div>
-        <div class="settings-item-info">
-          <div class="settings-item-title">美化 / 主题</div>
-          <div class="settings-item-sub">壁纸、图标、配色</div>
-        </div>
-      </div>
-      <div class="settings-item-arrow">›</div>
-    </div>
-    <div class="settings-item" id="goto-data">
-      <div class="settings-item-left">
-        <div class="settings-item-icon">📦</div>
-        <div class="settings-item-info">
-          <div class="settings-item-title">数据管理</div>
-          <div class="settings-item-sub">导入 / 导出全部数据</div>
-        </div>
-      </div>
-      <div class="settings-item-arrow">›</div>
-    </div>
-  </div>
-</div>
+.api-archive-item:last-child {
+  margin-bottom: 0;
+}
 
-<!-- ① API 设置页 -->
-<div id="settings-api" class="settings-layer" style="display:none;">
-  <div class="settings-topbar">
-    <button class="settings-back-btn" data-back="settings-root">&#8592;</button>
-    <div class="settings-topbar-title">API 设置</div>
-  </div>
-  <div class="settings-scroll">
-    <div class="settings-section-title">当前配置</div>
-    <div class="settings-card">
-      <label class="settings-label">配置名称</label>
-      <input class="settings-input" id="api-config-name" placeholder="给这套配置起个名字…">
-      <label class="settings-label">API 地址</label>
-      <input class="settings-input" id="api-url" placeholder="https://api.example.com/v1">
-      <label class="settings-label">API 密钥</label>
-      <input class="settings-input" id="api-key" type="password" placeholder="sk-…">
-      <div class="settings-row-btns">
-        <button class="settings-btn-primary" id="api-fetch-models-btn">拉取模型</button>
-        <button class="settings-btn-ghost" id="api-save-btn">保存配置</button>
-      </div>
-      <div id="api-fetch-status" class="api-status-text"></div>
-      <label class="settings-label" id="api-model-label" style="display:none;">选择模型</label>
-      <select class="settings-input" id="api-model-select" style="display:none;"></select>
-      <button class="settings-btn-primary" id="api-model-confirm-btn" style="display:none;margin-top:6px;">确认选择模型</button>
-    </div>
-    <div class="settings-section-title">配置存档</div>
-    <div id="api-archive-list" class="settings-card"></div>
-  </div>
-</div>
+.api-archive-item:active {
+  background: #eaf4fc;
+}
 
-<!-- ② 美化/主题页 -->
-<div id="settings-theme" class="settings-layer" style="display:none;">
-  <div class="settings-topbar">
-    <button class="settings-back-btn" data-back="settings-root">&#8592;</button>
-    <div class="settings-topbar-title">美化 / 主题</div>
-  </div>
-  <div class="settings-scroll">
-    <div class="settings-section-title">壁纸</div>
-    <div class="settings-card">
-      <div class="theme-wallpaper-preview" id="wallpaper-preview"></div>
-      <div class="settings-row-btns" style="margin-top:10px;">
-        <button class="settings-btn-primary" id="wallpaper-url-btn">输入URL</button>
-        <button class="settings-btn-ghost" id="wallpaper-local-btn">本地上传</button>
-        <button class="settings-btn-danger" id="wallpaper-clear-btn">清除</button>
-      </div>
-      <input type="file" id="wallpaper-file-input" accept="image/*" style="display:none;">
-    </div>
-    <div class="settings-section-title">App 图标替换</div>
-    <div class="settings-card" id="icon-replace-list"></div>
-    <div class="settings-section-title">整体配色</div>
-    <div class="settings-card">
-      <div id="color-fields"></div>
-      <div class="settings-row-btns" style="margin-top:10px;">
-        <button class="settings-btn-primary" id="color-apply-btn">应用配色</button>
-        <button class="settings-btn-ghost" id="color-reset-btn">恢复默认</button>
-      </div>
-    </div>
-  </div>
-</div>
+.api-archive-info {
+  flex: 1;
+  min-width: 0;
+}
 
-<!-- ③ 数据管理页 -->
-<div id="settings-data" class="settings-layer" style="display:none;">
-  <div class="settings-topbar">
-    <button class="settings-back-btn" data-back="settings-root">&#8592;</button>
-    <div class="settings-topbar-title">数据管理</div>
-  </div>
-  <div class="settings-scroll">
-    <div class="settings-section-title">全部数据</div>
-    <div class="settings-card">
-      <div class="settings-desc">导出当前所有配置（API、美化、消息、倒计时等）为 JSON 文件</div>
-      <div class="settings-row-btns" style="margin-top:8px;">
-        <button class="settings-btn-primary" id="export-all-btn">导出全部</button>
-        <button class="settings-btn-ghost" id="import-all-btn">导入全部</button>
-      </div>
-      <input type="file" id="import-all-file" accept=".json" style="display:none;">
-    </div>
-    <div class="settings-section-title">美化数据</div>
-    <div class="settings-card">
-      <div class="settings-desc">仅导出 / 导入壁纸、图标、配色等美化相关数据</div>
-      <div class="settings-row-btns" style="margin-top:8px;">
-        <button class="settings-btn-primary" id="export-theme-btn">导出美化</button>
-        <button class="settings-btn-ghost" id="import-theme-btn">导入美化</button>
-      </div>
-      <input type="file" id="import-theme-file" accept=".json" style="display:none;">
-    </div>
-    <div class="settings-section-title">危险操作</div>
-    <div class="settings-card">
-      <div class="settings-desc" style="color:#e05c5c;">清除全部本地数据，不可恢复</div>
-      <button class="settings-btn-danger" id="clear-all-data-btn" style="margin-top:8px;">清除全部数据</button>
-    </div>
-  </div>
-</div>
+.api-archive-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dark, #2c3448);
+  margin-bottom: 3px;
+}
 
-<!-- 壁纸URL输入弹窗 -->
-<div class="modal-mask" id="wallpaper-url-modal">
-  <div class="modal-box">
-    <div class="modal-title">输入壁纸图片URL</div>
-    <input class="modal-input" id="wallpaper-url-input" placeholder="https://…" style="height:40px;resize:none;">
-    <div class="btn-row">
-      <button class="modal-btn" id="wallpaper-url-confirm">确认</button>
-      <button class="modal-btn-ghost" id="wallpaper-url-cancel">取消</button>
-    </div>
-  </div>
-</div>
+.api-archive-url {
+  font-size: 10.5px;
+  color: var(--text-light, #9aafc4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-<!-- App图标替换弹窗 -->
-<div class="modal-mask" id="icon-replace-modal">
-  <div class="modal-box">
-    <div class="modal-title" id="icon-replace-modal-title">替换图标</div>
-    <div class="edit-tab-row">
-      <button class="edit-tab active" data-icon-tab="url">输入URL</button>
-      <button class="edit-tab" data-icon-tab="local">本地上传</button>
-    </div>
-    <div id="icon-url-panel">
-      <input class="modal-input" id="icon-url-input" placeholder="图标图片URL…" style="height:40px;resize:none;">
-    </div>
-    <div id="icon-local-panel" style="display:none;">
-      <input type="file" id="icon-file-input" accept="image/*"
-        style="margin-bottom:10px;font-size:12px;color:var(--text-mid);width:100%;">
-    </div>
-    <div class="btn-row">
-      <button class="modal-btn" id="icon-replace-confirm">确认</button>
-      <button class="modal-btn-ghost" id="icon-replace-cancel">取消</button>
-    </div>
-  </div>
-</div>
+.api-archive-del {
+  background: #ffe0e0;
+  color: #e05c5c;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 11px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+}
 
-<script src="app.js"></script>
-<script src="settings.js"></script>
+/* ---- 壁纸预览 ---- */
+.theme-wallpaper-preview {
+  width: 100%;
+  height: 90px;
+  border-radius: 12px;
+  background: var(--bg2, #F8F9FA);
+  border: 1.5px dashed var(--light-blue, #B3D8F4);
+  background-size: cover;
+  background-position: center;
+}
 
-</body>
-</html>
+/* ---- 图标替换列表 ---- */
+.icon-replace-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(153,200,237,0.14);
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.icon-replace-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.icon-replace-row:first-child {
+  padding-top: 0;
+}
+
+.icon-replace-row:active {
+  opacity: 0.7;
+}
+
+.icon-replace-preview {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--light-blue, #B3D8F4);
+  flex-shrink: 0;
+}
+
+.icon-replace-name {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text-dark, #2c3448);
+  font-weight: 500;
+}
+
+.icon-replace-hint {
+  font-size: 11px;
+  color: var(--text-light, #9aafc4);
+}
+
+/* ---- 配色字段 ---- */
+.color-field-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(153,200,237,0.12);
+}
+
+.color-field-row:last-child {
+  border-bottom: none;
+}
+
+.color-field-label {
+  flex: 1;
+  font-size: 12.5px;
+  color: var(--text-mid, #5a6a80);
+}
+
+.color-field-input {
+  width: 36px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1.5px solid var(--light-blue, #B3D8F4);
+  padding: 2px;
+  cursor: pointer;
+  background: none;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+}
+
+.color-field-hex {
+  width: 80px;
+  border: 1.5px solid var(--light-blue, #B3D8F4);
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 12px;
+  color: var(--text-dark, #2c3448);
+  background: var(--bg2, #F8F9FA);
+  outline: none;
+  font-family: 'SF Mono', 'Menlo', monospace;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+}

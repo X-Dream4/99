@@ -9,6 +9,12 @@
 </head>
 <body>
 
+<!-- 顶部状态栏 -->
+<div id="status-bar">
+  <div id="status-time">00:00</div>
+  <div id="status-watermark">MX_4</div>
+</div>
+
 <!-- 页面横滑容器 -->
 <div id="pages-wrap">
 
@@ -16,43 +22,38 @@
   <div class="page" id="page1">
     <div id="page1-inner">
 
-      <!-- 顶部行：日期胶囊 + 消息观赏 -->
-      <div id="top-row">
+      <!-- 日期+倒计时胶囊 -->
+      <div id="date-capsule">
+        <div id="date-left">
+          <div id="date-year-month"></div>
+          <div id="date-day"></div>
+          <div id="date-lunar"></div>
+        </div>
+        <div class="cd-divider"></div>
+        <div id="countdown-right">
+          <div id="cd-label">加载中…</div>
+          <div id="cd-number">—</div>
+          <div id="cd-unit">天</div>
+        </div>
+      </div>
 
-        <!-- 日期+倒计时胶囊 -->
-        <div id="date-capsule">
-          <div id="date-left">
-            <div id="date-year-month"></div>
-            <div id="date-day"></div>
-            <div id="date-lunar"></div>
-          </div>
-          <div class="cd-divider"></div>
-          <div id="countdown-right">
-            <div id="cd-label">加载中…</div>
-            <div id="cd-number">—</div>
-            <div id="cd-unit">天</div>
+      <!-- 消息观赏 -->
+      <div id="msg-widget">
+        <div class="msg-row">
+          <img class="msg-avatar" id="msg-avatar-0"
+            src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=luna" alt="">
+          <div class="msg-bubbles" id="msg-bubbles-0">
+            <div class="msg-bubble">你好呀～今天过得怎么样？</div>
           </div>
         </div>
-
-        <!-- 消息观赏 -->
-        <div id="msg-widget">
-          <div class="msg-row">
-            <img class="msg-avatar" id="msg-avatar-0"
-              src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=luna" alt="">
-            <div class="msg-bubbles" id="msg-bubbles-0">
-              <div class="msg-bubble">你好呀～今天过得怎么样？</div>
-            </div>
-          </div>
-          <div class="msg-row">
-            <img class="msg-avatar" id="msg-avatar-1"
-              src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=nova" alt="">
-            <div class="msg-bubbles" id="msg-bubbles-1">
-              <div class="msg-bubble">HALO·九 已上线 ✨</div>
-            </div>
+        <div class="msg-row">
+          <img class="msg-avatar" id="msg-avatar-1"
+            src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=nova" alt="">
+          <div class="msg-bubbles" id="msg-bubbles-1">
+            <div class="msg-bubble">HALO·九 已上线 ✨</div>
           </div>
         </div>
-
-      </div><!-- /top-row -->
+      </div>
 
       <!-- 中部行 -->
       <div id="mid-row">
@@ -66,7 +67,6 @@
             <div id="user-sig"></div>
           </div>
 
-          <!-- 4个App，无底部格子 -->
           <div id="four-apps">
             <div class="app-item" data-app="0">
               <img class="app-icon" src="https://img.icons8.com/fluency/96/music.png" alt="">
@@ -111,7 +111,7 @@
             </div>
           </div>
 
-          <!-- 两条可编辑文字条 -->
+          <!-- 文字条 -->
           <div id="text-bars">
             <div class="text-bar" id="text-bar-0">
               <span class="text-bar-content" id="text-bar-content-0" data-bar="0"></span>
@@ -322,7 +322,6 @@
     <div class="settings-topbar-title">API 设置</div>
   </div>
   <div class="settings-scroll">
-
     <div class="settings-section-title">当前配置</div>
     <div class="settings-card">
       <label class="settings-label">配置名称</label>
@@ -340,10 +339,8 @@
       <select class="settings-input" id="api-model-select" style="display:none;"></select>
       <button class="settings-btn-primary" id="api-model-confirm-btn" style="display:none;margin-top:6px;">确认选择模型</button>
     </div>
-
     <div class="settings-section-title">配置存档</div>
     <div id="api-archive-list" class="settings-card"></div>
-
   </div>
 </div>
 
@@ -354,8 +351,6 @@
     <div class="settings-topbar-title">美化 / 主题</div>
   </div>
   <div class="settings-scroll">
-
-    <!-- 壁纸 -->
     <div class="settings-section-title">壁纸</div>
     <div class="settings-card">
       <div class="theme-wallpaper-preview" id="wallpaper-preview"></div>
@@ -366,12 +361,8 @@
       </div>
       <input type="file" id="wallpaper-file-input" accept="image/*" style="display:none;">
     </div>
-
-    <!-- App 图标替换 -->
     <div class="settings-section-title">App 图标替换</div>
     <div class="settings-card" id="icon-replace-list"></div>
-
-    <!-- 配色 -->
     <div class="settings-section-title">整体配色</div>
     <div class="settings-card">
       <div id="color-fields"></div>
@@ -380,7 +371,6 @@
         <button class="settings-btn-ghost" id="color-reset-btn">恢复默认</button>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -391,7 +381,6 @@
     <div class="settings-topbar-title">数据管理</div>
   </div>
   <div class="settings-scroll">
-
     <div class="settings-section-title">全部数据</div>
     <div class="settings-card">
       <div class="settings-desc">导出当前所有配置（API、美化、消息、倒计时等）为 JSON 文件</div>
@@ -401,7 +390,6 @@
       </div>
       <input type="file" id="import-all-file" accept=".json" style="display:none;">
     </div>
-
     <div class="settings-section-title">美化数据</div>
     <div class="settings-card">
       <div class="settings-desc">仅导出 / 导入壁纸、图标、配色等美化相关数据</div>
@@ -411,13 +399,11 @@
       </div>
       <input type="file" id="import-theme-file" accept=".json" style="display:none;">
     </div>
-
     <div class="settings-section-title">危险操作</div>
     <div class="settings-card">
       <div class="settings-desc" style="color:#e05c5c;">清除全部本地数据，不可恢复</div>
       <button class="settings-btn-danger" id="clear-all-data-btn" style="margin-top:8px;">清除全部数据</button>
     </div>
-
   </div>
 </div>
 
@@ -454,7 +440,6 @@
     </div>
   </div>
 </div>
-
 
 <script src="app.js"></script>
 <script src="settings.js"></script>
