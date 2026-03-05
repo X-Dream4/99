@@ -1,10 +1,7 @@
 /* ============================================================
-   liao.css — 了了 App 专属样式（移动端优先）
+   liao.css — 了了 App 专属样式
    ============================================================ */
 
-/* ============================================================
-   了了 App 根层（全屏覆盖）
-   ============================================================ */
 #liao-app {
   position: fixed;
   inset: 0;
@@ -68,7 +65,7 @@
 }
 
 /* ============================================================
-   主内容区（切换面板容器）
+   主内容区
    ============================================================ */
 .liao-main {
   flex: 1;
@@ -90,7 +87,7 @@
 }
 
 /* ============================================================
-   ① 聊天列表面板
+   聊天列表面板
    ============================================================ */
 .chat-list-wrap {
   flex: 1;
@@ -99,7 +96,6 @@
   padding: 8px 0 80px;
 }
 
-/* 聊天条目 */
 .chat-list-item {
   display: flex;
   align-items: center;
@@ -185,7 +181,6 @@
   font-weight: 600;
 }
 
-/* 底部操作栏（新建等） */
 .chat-bottom-bar {
   position: absolute;
   bottom: 0;
@@ -230,7 +225,7 @@
 }
 
 /* ============================================================
-   ② 角色库面板
+   角色库面板
    ============================================================ */
 .role-lib-wrap {
   flex: 1;
@@ -301,7 +296,7 @@
 }
 
 /* ============================================================
-   ③ 我的主页面板
+   我的主页面板
    ============================================================ */
 .my-home-wrap {
   flex: 1;
@@ -335,7 +330,7 @@
 }
 
 .my-menu-icon {
-  font-size: 24px;
+  font-size: 22px;
   width: 38px;
   text-align: center;
   flex-shrink: 0;
@@ -363,7 +358,7 @@
 }
 
 /* ============================================================
-   ④ 随言面板（类朋友圈）
+   随言面板
    ============================================================ */
 .suiyan-wrap {
   flex: 1;
@@ -372,7 +367,6 @@
   padding-bottom: 30px;
 }
 
-/* 顶部背景图区 */
 .suiyan-header {
   position: relative;
   height: 130px;
@@ -399,7 +393,6 @@
   -webkit-appearance: none;
 }
 
-/* 用户信息行 */
 .suiyan-user-row {
   display: flex;
   align-items: flex-end;
@@ -420,6 +413,7 @@
   flex-shrink: 0;
   display: block;
   box-shadow: 0 2px 8px rgba(100,140,190,0.18);
+  cursor: pointer;
 }
 
 .suiyan-user-name {
@@ -431,6 +425,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 
 .suiyan-post-btn {
@@ -458,7 +453,6 @@
   background: rgba(153,200,237,0.85);
 }
 
-/* 随言列表 */
 .suiyan-list {
   padding: 14px 14px 0;
   display: flex;
@@ -520,7 +514,6 @@
   word-break: break-all;
 }
 
-/* 互动栏 */
 .suiyan-actions {
   display: flex;
   align-items: center;
@@ -552,7 +545,6 @@
   font-size: 14px;
 }
 
-/* 评论区 */
 .suiyan-comments {
   margin-top: 8px;
   background: var(--bg2, #F8F9FA);
@@ -575,7 +567,7 @@
 }
 
 /* ============================================================
-   聊天界面（全屏，独立层）
+   聊天界面（全屏）
    ============================================================ */
 #liao-chat-view {
   position: fixed;
@@ -590,7 +582,6 @@
   display: flex;
 }
 
-/* 聊天顶栏 */
 .chat-view-topbar {
   display: flex;
   align-items: center;
@@ -598,6 +589,7 @@
   padding: 0 14px;
   background: rgba(255,255,255,0.95);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(153,200,237,0.20);
   flex-shrink: 0;
   position: relative;
@@ -628,10 +620,26 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 60vw;
+  max-width: 55vw;
 }
 
-/* 聊天消息区 */
+/* 右上角三个点按钮 */
+.chat-settings-open-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--text-mid, #5a6a80);
+  cursor: pointer;
+  padding: 6px 0 6px 10px;
+  line-height: 1;
+  font-family: inherit;
+  -webkit-appearance: none;
+  z-index: 1;
+  flex-shrink: 0;
+  letter-spacing: 2px;
+}
+
 .chat-messages-area {
   flex: 1;
   overflow-y: auto;
@@ -639,16 +647,17 @@
   padding: 14px 14px 10px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
-/* 消息气泡 */
+/* ---- 气泡行 ---- */
 .chat-msg-row {
   display: flex;
   align-items: flex-end;
   gap: 8px;
 }
 
+/* 用户行：靠右 */
 .chat-msg-row.user-row {
   flex-direction: row-reverse;
 }
@@ -662,9 +671,11 @@
   flex-shrink: 0;
   border: 1.5px solid rgba(153,200,237,0.28);
   display: block;
+  align-self: flex-end;
 }
 
-.chat-msg-bubble {
+/* 角色气泡（左） */
+.chat-msg-row:not(.user-row) .chat-msg-bubble {
   max-width: 68vw;
   padding: 9px 13px;
   border-radius: 4px 16px 16px 16px;
@@ -673,17 +684,25 @@
   color: var(--text-dark, #2c3448);
   background: #fff;
   box-shadow: 0 2px 8px rgba(100,140,190,0.09);
-  word-break: break-all;
+  word-break: break-word;
   position: relative;
 }
 
+/* 用户气泡（右） */
 .chat-msg-row.user-row .chat-msg-bubble {
+  max-width: 68vw;
+  padding: 9px 13px;
+  border-radius: 16px 4px 16px 16px;
+  font-size: 13.5px;
+  line-height: 1.6;
   background: var(--primary, #99C8ED);
   color: #fff;
-  border-radius: 16px 4px 16px 16px;
+  box-shadow: 0 2px 8px rgba(100,140,190,0.09);
+  word-break: break-word;
+  position: relative;
 }
 
-/* 聊天底部输入栏 */
+/* 输入栏 */
 .chat-view-inputbar {
   display: flex;
   align-items: center;
@@ -721,7 +740,8 @@
   background: var(--primary, #99C8ED);
   border: none;
   color: #fff;
-  font-size: 17px;
+  font-size: 13px;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -730,6 +750,7 @@
   -webkit-appearance: none;
   transition: opacity .18s;
   box-shadow: 0 2px 8px rgba(153,200,237,0.35);
+  font-family: inherit;
 }
 
 .chat-view-api-btn:active {
@@ -762,7 +783,7 @@
   display: none;
   align-items: center;
   gap: 4px;
-  padding: 6px 14px;
+  padding: 6px 14px 2px;
 }
 
 .chat-typing-indicator.show {
@@ -786,9 +807,226 @@
 }
 
 /* ============================================================
-   新建角色弹窗
+   聊天设置界面（全屏覆盖）
    ============================================================ */
-#liao-new-role-modal {
+#liao-chat-settings {
+  position: fixed;
+  inset: 0;
+  z-index: 470;
+  background: var(--bg, #F5F5F0);
+  display: none;
+  flex-direction: column;
+}
+
+#liao-chat-settings.show {
+  display: flex;
+}
+
+/* 顶栏 */
+.cs-topbar {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  padding: 0 14px;
+  background: rgba(255,255,255,0.95);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(153,200,237,0.20);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.cs-close-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: var(--primary, #99C8ED);
+  cursor: pointer;
+  padding: 6px 10px 6px 0;
+  line-height: 1;
+  font-family: inherit;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+}
+
+.cs-topbar-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark, #2c3448);
+  white-space: nowrap;
+}
+
+/* 三个标签按钮 */
+.cs-tabs {
+  display: flex;
+  gap: 0;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid rgba(153,200,237,0.18);
+  flex-shrink: 0;
+  padding: 0 10px;
+}
+
+.cs-tab-btn {
+  flex: 1;
+  height: 42px;
+  background: none;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-light, #9aafc4);
+  cursor: pointer;
+  font-family: inherit;
+  transition: color .18s, border-color .18s;
+  -webkit-appearance: none;
+}
+
+.cs-tab-btn.active {
+  color: var(--primary, #99C8ED);
+  border-bottom-color: var(--primary, #99C8ED);
+  font-weight: 700;
+}
+
+/* 页面容器 */
+.cs-pages-wrap {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.cs-page {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+}
+
+.cs-page.active {
+  display: flex;
+}
+
+.cs-page-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 14px 14px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 待开发占位 */
+.cs-coming-soon {
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cs-coming-soon-icon {
+  font-size: 48px;
+  color: var(--text-light, #9aafc4);
+  opacity: 0.5;
+}
+
+.cs-coming-soon-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-mid, #5a6a80);
+}
+
+.cs-coming-soon-sub {
+  font-size: 12px;
+  color: var(--text-light, #9aafc4);
+}
+
+/* ============================================================
+   手风琴条目
+   ============================================================ */
+.cs-accordion-item {
+  background: #fff;
+  border-radius: 16px;
+  border: 1.5px solid rgba(153,200,237,0.16);
+  box-shadow: 0 2px 10px rgba(100,140,190,0.07);
+  overflow: hidden;
+}
+
+.cs-accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark, #2c3448);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background .15s;
+}
+
+.cs-accordion-header:active {
+  background: rgba(153,200,237,0.07);
+}
+
+.cs-accordion-arrow {
+  font-size: 18px;
+  color: var(--text-light, #9aafc4);
+  transition: transform .22s;
+  display: inline-block;
+}
+
+.cs-accordion-item.open .cs-accordion-arrow {
+  transform: rotate(90deg);
+}
+
+.cs-accordion-body {
+  display: none;
+  padding: 0 16px 16px;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cs-accordion-item.open .cs-accordion-body {
+  display: flex;
+}
+
+/* ============================================================
+   颜色选择行
+   ============================================================ */
+.cs-color-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 4px;
+}
+
+.cs-color-input {
+  width: 38px;
+  height: 32px;
+  border: 1.5px solid rgba(153,200,237,0.32);
+  border-radius: 8px;
+  padding: 2px;
+  cursor: pointer;
+  background: none;
+  flex-shrink: 0;
+}
+
+.cs-color-label {
+  font-size: 12px;
+  color: var(--text-mid, #5a6a80);
+}
+
+/* ============================================================
+   弹窗通用（新建角色、群聊、导入等）
+   ============================================================ */
+#liao-new-role-modal,
+#liao-new-group-modal,
+#liao-import-modal,
+#liao-post-modal,
+#liao-comment-modal {
   position: fixed;
   inset: 0;
   z-index: 520;
@@ -800,7 +1038,11 @@
   justify-content: center;
 }
 
-#liao-new-role-modal.show {
+#liao-new-role-modal.show,
+#liao-new-group-modal.show,
+#liao-import-modal.show,
+#liao-post-modal.show,
+#liao-comment-modal.show {
   display: flex;
 }
 
@@ -874,7 +1116,6 @@
   border-color: var(--primary, #99C8ED);
 }
 
-/* 头像预览行 */
 .liao-avatar-preview-row {
   display: flex;
   align-items: center;
@@ -918,7 +1159,6 @@
   background: rgba(153,200,237,0.18);
 }
 
-/* 按钮行 */
 .liao-modal-btns {
   display: flex;
   gap: 10px;
@@ -957,44 +1197,6 @@
   -webkit-appearance: none;
 }
 
-/* ============================================================
-   发随言弹窗
-   ============================================================ */
-#liao-post-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 520;
-  background: rgba(26,31,46,0.38);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-#liao-post-modal.show {
-  display: flex;
-}
-
-/* ============================================================
-   评论弹窗
-   ============================================================ */
-#liao-comment-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 520;
-  background: rgba(26,31,46,0.38);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-#liao-comment-modal.show {
-  display: flex;
-}
-
 .liao-comment-list {
   max-height: 180px;
   overflow-y: auto;
@@ -1020,35 +1222,14 @@
 }
 
 /* ============================================================
-   新建群聊弹窗 & 文件导入弹窗（复用 liao-modal-box 结构）
-   ============================================================ */
-#liao-new-group-modal,
-#liao-import-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 520;
-  background: rgba(26,31,46,0.38);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-#liao-new-group-modal.show,
-#liao-import-modal.show {
-  display: flex;
-}
-
-/* ============================================================
-   响应式微调（≥480px 平板适配）
+   响应式
    ============================================================ */
 @media (min-width: 480px) {
   .role-grid {
     grid-template-columns: repeat(4, 1fr);
   }
-
-  .chat-msg-bubble {
+  .chat-msg-row:not(.user-row) .chat-msg-bubble,
+  .chat-msg-row.user-row .chat-msg-bubble {
     max-width: 54vw;
   }
 }
