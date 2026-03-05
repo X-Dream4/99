@@ -12,6 +12,19 @@ function load(key, def) {
 }
 
 /* ============================================================
+   状态栏时间
+   ============================================================ */
+function updateStatusTime() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const el = document.getElementById('status-time');
+  if (el) el.textContent = h + ':' + m;
+}
+updateStatusTime();
+setInterval(updateStatusTime, 1000);
+
+/* ============================================================
    农历 / 节气 / 节日
    ============================================================ */
 const lunarInfo = [
@@ -480,37 +493,25 @@ document.getElementById('textbar-cancel-btn').addEventListener('click', function
 /* ============================================================
    页面横滑
    ============================================================ */
-let currentPage = 0;
-const pagesWrap = document.getElementById('pages-wrap');
-let touchStartX = 0, touchStartY = 0, touchMoved = false;
+let currentPage  = 0;
+const pagesWrap  = document.getElementById('pages-wrap');
+let touchStartX  = 0, touchStartY = 0, touchMoved = false;
 
 function goToPage(idx) {
   currentPage = idx;
-  pagesWrap.style.transform = `translateX(-${idx * 50}%)`;
+  pagesWrap.style.transform = `translateX(-${idx * 100}vw)`;
   document.querySelectorAll('.dot').forEach((dot, i) => {
     dot.classList.toggle('active', i === idx);
   });
 }
 
-/* 判断点击目标是否在不参与横滑的区域内 */
-function isInNoSwipeZone(target) {
-  return !!(
-    target.closest('.settings-layer') ||
-    target.closest('.modal-mask')     ||
-    target.closest('#dock')
-  );
-}
-
-/* ---- Touch 横滑 ---- */
 document.addEventListener('touchstart', function(e) {
-  if (isInNoSwipeZone(e.target)) return;
   touchStartX = e.touches[0].clientX;
   touchStartY = e.touches[0].clientY;
   touchMoved  = false;
 }, { passive: true });
 
 document.addEventListener('touchmove', function(e) {
-  if (isInNoSwipeZone(e.target)) return;
   const dx = e.touches[0].clientX - touchStartX;
   const dy = e.touches[0].clientY - touchStartY;
   if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) touchMoved = true;
@@ -518,37 +519,27 @@ document.addEventListener('touchmove', function(e) {
 
 document.addEventListener('touchend', function(e) {
   if (!touchMoved) return;
-  if (isInNoSwipeZone(e.target)) { touchMoved = false; return; }
   const dx = e.changedTouches[0].clientX - touchStartX;
   if (dx < -50 && currentPage < 1) goToPage(1);
   else if (dx > 50 && currentPage > 0) goToPage(0);
   touchMoved = false;
 }, { passive: true });
 
-/* ---- Mouse 横滑（桌面端） ---- */
-let mouseStartX = 0, mouseIsDown = false, mouseMoved = false;
-
+let mouseStartX = 0, mouseIsDown = false;
 document.addEventListener('mousedown', function(e) {
-  if (isInNoSwipeZone(e.target)) return;
+  if (e.target.closest('.modal-mask')) return;
+  if (e.target.closest('.settings-layer')) return;
   mouseStartX = e.clientX;
   mouseIsDown = true;
-  mouseMoved  = false;
 });
-
-document.addEventListener('mousemove', function(e) {
-  if (!mouseIsDown) return;
-  if (Math.abs(e.clientX - mouseStartX) > 8) mouseMoved = true;
-});
-
 document.addEventListener('mouseup', function(e) {
   if (!mouseIsDown) return;
   mouseIsDown = false;
-  if (!mouseMoved) return;
-  if (isInNoSwipeZone(e.target)) { mouseMoved = false; return; }
+  if (e.target.closest('.modal-mask')) return;
+  if (e.target.closest('.settings-layer')) return;
   const dx = e.clientX - mouseStartX;
   if (dx < -60 && currentPage < 1) goToPage(1);
   else if (dx > 60 && currentPage > 0) goToPage(0);
-  mouseMoved = false;
 });
 
 /* ============================================================
