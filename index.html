@@ -8,9 +8,107 @@
 <link rel="stylesheet" href="style-modal.css">
 <link rel="stylesheet" href="style-page2.css">
 <link rel="stylesheet" href="settings.css">
-<link rel="stylesheet" href="liao.css">
+<link rel="stylesheet" href="liao-base.css">
+<link rel="stylesheet" href="liao-chat.css">
+<link rel="stylesheet" href="liao-rolelib.css">
+<link rel="stylesheet" href="liao-myhome.css">
+<link rel="stylesheet" href="liao-suiyan.css">
+<link rel="stylesheet" href="liao-settings.css">
+<link rel="stylesheet" href="lockscreen.css">
 </head>
 <body>
+
+<!-- ===================== 锁屏界面 ===================== -->
+<div id="lockscreen">
+  <!-- 背景装饰 -->
+  <div class="ls-bg-circle c1"></div>
+  <div class="ls-bg-circle c2"></div>
+  <div class="ls-bg-circle c3"></div>
+
+  <!-- 顶部时间区 -->
+  <div class="ls-top">
+    <div class="ls-time" id="ls-time">00:00</div>
+    <div class="ls-date" id="ls-date"></div>
+    <div class="ls-hint">向上滑动解锁</div>
+  </div>
+
+  <!-- 上滑箭头 -->
+  <div class="ls-swipe-arrow">
+    <span></span>
+    <span></span>
+    <div class="ls-swipe-label">SLIDE UP</div>
+  </div>
+</div>
+
+<!-- ===================== 密码输入界面 ===================== -->
+<div id="pinscreen">
+  <!-- 顶部头像+提示 -->
+  <div class="pin-top">
+    <img class="pin-avatar" id="pin-avatar-img"
+      src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=halo9" alt="">
+    <div class="pin-username">HALO·九</div>
+    <div class="pin-label">请输入密码</div>
+  </div>
+
+  <!-- 密码点 -->
+  <div class="pin-dots">
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+  </div>
+
+  <!-- 错误提示 -->
+  <div class="pin-error-msg" id="pin-error-msg"></div>
+
+  <!-- 数字键盘（10键：1-9 + 空 + 0 + 退格）-->
+  <div class="pin-keyboard">
+    <div class="pin-key" data-key="1">
+      <span class="key-num">1</span>
+      <span class="key-alpha"></span>
+    </div>
+    <div class="pin-key" data-key="2">
+      <span class="key-num">2</span>
+      <span class="key-alpha">ABC</span>
+    </div>
+    <div class="pin-key" data-key="3">
+      <span class="key-num">3</span>
+      <span class="key-alpha">DEF</span>
+    </div>
+    <div class="pin-key" data-key="4">
+      <span class="key-num">4</span>
+      <span class="key-alpha">GHI</span>
+    </div>
+    <div class="pin-key" data-key="5">
+      <span class="key-num">5</span>
+      <span class="key-alpha">JKL</span>
+    </div>
+    <div class="pin-key" data-key="6">
+      <span class="key-num">6</span>
+      <span class="key-alpha">MNO</span>
+    </div>
+    <div class="pin-key" data-key="7">
+      <span class="key-num">7</span>
+      <span class="key-alpha">PQRS</span>
+    </div>
+    <div class="pin-key" data-key="8">
+      <span class="key-num">8</span>
+      <span class="key-alpha">TUV</span>
+    </div>
+    <div class="pin-key" data-key="9">
+      <span class="key-num">9</span>
+      <span class="key-alpha">WXYZ</span>
+    </div>
+    <div class="pin-key empty"></div>
+    <div class="pin-key zero" data-key="0">
+      <span class="key-num">0</span>
+      <span class="key-alpha"></span>
+    </div>
+    <div class="pin-key backspace" data-key="del">&#9003;</div>
+  </div>
+</div>
 
 <!-- 顶部状态栏 -->
 <div id="status-bar">
@@ -287,6 +385,16 @@
       </div>
       <div class="settings-item-arrow">›</div>
     </div>
+    <div class="settings-item" id="goto-privacy">
+      <div class="settings-item-left">
+        <div class="settings-item-icon">◎</div>
+        <div class="settings-item-info">
+          <div class="settings-item-title">隐私设置</div>
+          <div class="settings-item-sub">修改主屏幕解锁密码</div>
+        </div>
+      </div>
+      <div class="settings-item-arrow">›</div>
+    </div>
   </div>
 </div>
 
@@ -378,6 +486,33 @@
     <div class="settings-card">
       <div class="settings-desc" style="color:#e05c5c;">清除全部本地数据，不可恢复</div>
       <button class="settings-btn-danger" id="clear-all-data-btn" style="margin-top:8px;">清除全部数据</button>
+    </div>
+  </div>
+</div>
+
+<!-- 隐私设置页 -->
+<div id="settings-privacy" class="settings-layer" style="display:none;">
+  <div class="settings-topbar">
+    <button class="settings-back-btn" data-back="settings-root">&#8592;</button>
+    <div class="settings-topbar-title">隐私设置</div>
+  </div>
+  <div class="settings-scroll">
+    <div class="settings-section-title">主屏幕密码</div>
+    <div class="settings-card">
+      <div class="settings-desc">修改解锁主屏幕所需的 6 位数字密码。</div>
+      <label class="settings-label" style="margin-top:12px;">当前密码</label>
+      <input class="settings-input" id="privacy-old-pin" type="password"
+        inputmode="numeric" maxlength="6" placeholder="输入当前密码">
+      <label class="settings-label">新密码（6位数字）</label>
+      <input class="settings-input" id="privacy-new-pin" type="password"
+        inputmode="numeric" maxlength="6" placeholder="输入新密码">
+      <label class="settings-label">确认新密码</label>
+      <input class="settings-input" id="privacy-confirm-pin" type="password"
+        inputmode="numeric" maxlength="6" placeholder="再次输入新密码">
+      <div id="privacy-pin-msg" style="font-size:12px;margin-top:8px;height:16px;color:#e07a7a;"></div>
+      <div class="settings-row-btns" style="margin-top:10px;">
+        <button class="settings-btn-primary" id="privacy-pin-save-btn">保存新密码</button>
+      </div>
     </div>
   </div>
 </div>
@@ -530,15 +665,12 @@
     <div class="chat-view-title" id="chat-view-title">聊天</div>
     <button class="chat-settings-open-btn" id="chat-settings-open-btn" title="聊天设置">···</button>
   </div>
-  <!-- 正在输入指示 -->
   <div class="chat-typing-indicator" id="chat-typing">
     <div class="typing-dot"></div>
     <div class="typing-dot"></div>
     <div class="typing-dot"></div>
   </div>
-  <!-- 消息区 -->
   <div class="chat-messages-area" id="liao-chat-messages"></div>
-  <!-- 输入栏 -->
   <div class="chat-view-inputbar">
     <input class="chat-view-input" id="chat-view-input"
       type="text" placeholder="说点什么…" autocomplete="off">
@@ -553,21 +685,18 @@
     <button class="cs-close-btn" id="cs-close-btn">←</button>
     <div class="cs-topbar-title">聊天设置</div>
   </div>
-  <!-- 顶部三个标签 -->
   <div class="cs-tabs">
     <button class="cs-tab-btn active" data-cstab="cs-tab-role">角色设置</button>
     <button class="cs-tab-btn" data-cstab="cs-tab-schedule">角色日程</button>
     <button class="cs-tab-btn" data-cstab="cs-tab-memory">角色记忆</button>
   </div>
 
-  <!-- 页面容器 -->
   <div class="cs-pages-wrap">
 
     <!-- 第一页：角色设置 -->
     <div class="cs-page active" id="cs-tab-role-page">
       <div class="cs-page-scroll">
 
-        <!-- 条目1：角色信息 -->
         <div class="cs-accordion-item">
           <div class="cs-accordion-header">
             <span>角色信息</span>
@@ -588,14 +717,14 @@
             <label class="liao-modal-label">角色真名</label>
             <input class="liao-modal-input" id="cs-role-realname" placeholder="真实名字…">
             <label class="liao-modal-label">角色设定</label>
-            <textarea class="liao-modal-textarea" id="cs-role-setting" placeholder="角色性格、背景、说话方式…" style="min-height:100px;"></textarea>
+            <textarea class="liao-modal-textarea" id="cs-role-setting"
+              placeholder="角色性格、背景、说话方式…" style="min-height:100px;"></textarea>
             <div style="margin-top:12px;">
               <button class="liao-btn-primary" id="cs-role-save-btn" style="width:100%;">保存角色设置</button>
             </div>
           </div>
         </div>
 
-        <!-- 条目2：用户设置 -->
         <div class="cs-accordion-item">
           <div class="cs-accordion-header">
             <span>此聊天用户设置</span>
@@ -605,7 +734,7 @@
             <div class="liao-avatar-preview-row">
               <img class="liao-avatar-preview" id="cs-user-avatar-preview"
                 src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=user" alt="">
-                            <div class="liao-avatar-upload-btns">
+              <div class="liao-avatar-upload-btns">
                 <input class="liao-modal-input" id="cs-user-avatar-url" placeholder="头像 URL…">
                 <button class="liao-avatar-btn" id="cs-user-avatar-local-btn">本地上传</button>
                 <input type="file" id="cs-user-avatar-file" accept="image/*" style="display:none;">
@@ -614,14 +743,14 @@
             <label class="liao-modal-label">用户名字</label>
             <input class="liao-modal-input" id="cs-user-name" placeholder="用户名…">
             <label class="liao-modal-label">用户设定</label>
-            <textarea class="liao-modal-textarea" id="cs-user-setting" placeholder="用户的身份、性格、与角色的关系…" style="min-height:80px;"></textarea>
+            <textarea class="liao-modal-textarea" id="cs-user-setting"
+              placeholder="用户的身份、性格、与角色的关系…" style="min-height:80px;"></textarea>
             <div style="margin-top:12px;">
               <button class="liao-btn-primary" id="cs-user-save-btn" style="width:100%;">保存用户设置</button>
             </div>
           </div>
         </div>
 
-        <!-- 条目3：聊天美化 -->
         <div class="cs-accordion-item">
           <div class="cs-accordion-header">
             <span>聊天美化</span>
@@ -645,7 +774,9 @@
             <label class="liao-modal-label">字体大小（px）</label>
             <input class="liao-modal-input" id="cs-font-size" type="number" min="10" max="22" value="13.5">
             <label class="liao-modal-label">自定义气泡 CSS</label>
-            <textarea class="liao-modal-textarea" id="cs-custom-css" placeholder="在此输入自定义 CSS，例如：&#10;.chat-msg-bubble { font-weight: bold; }" style="min-height:80px;font-family:monospace;font-size:12px;"></textarea>
+            <textarea class="liao-modal-textarea" id="cs-custom-css"
+              placeholder="在此输入自定义 CSS，例如：&#10;.chat-msg-bubble { font-weight: bold; }"
+              style="min-height:80px;font-family:monospace;font-size:12px;"></textarea>
             <div style="margin-top:12px;display:flex;gap:10px;">
               <button class="liao-btn-primary" id="cs-beauty-save-btn" style="flex:1;">确定</button>
               <button class="liao-btn-ghost" id="cs-beauty-reset-btn" style="flex:1;">重置</button>
@@ -653,7 +784,6 @@
           </div>
         </div>
 
-        <!-- 条目4：消息数量设置 -->
         <div class="cs-accordion-item">
           <div class="cs-accordion-header">
             <span>消息数量设置</span>
@@ -676,8 +806,8 @@
           </div>
         </div>
 
-      </div><!-- /cs-page-scroll -->
-    </div><!-- /cs-tab-role-page -->
+      </div>
+    </div>
 
     <!-- 第二页：角色日程（待开发） -->
     <div class="cs-page" id="cs-tab-schedule-page">
@@ -697,7 +827,7 @@
       </div>
     </div>
 
-  </div><!-- /cs-pages-wrap -->
+  </div>
 </div><!-- /liao-chat-settings -->
 
 <!-- ===================== 新建角色弹窗 ===================== -->
@@ -851,7 +981,70 @@
 
 <script src="app.js"></script>
 <script src="settings.js"></script>
-<script src="liao.js"></script>
+<script src="liao-core.js"></script>
+<script src="liao-rolelib.js"></script>
+<script src="liao-myhome.js"></script>
+<script src="liao-suiyan.js"></script>
+<script src="liao-chat.js"></script>
+<script src="lockscreen.js"></script>
+<script>
+/* ---- 设置页：隐私设置入口绑定（内联补充，避免改动settings.js）---- */
+(function () {
+  /* 跳转到隐私设置页 */
+  const gotoPrivacy = document.getElementById('goto-privacy');
+  if (gotoPrivacy) {
+    gotoPrivacy.addEventListener('click', function () {
+      document.getElementById('settings-root').style.display = 'none';
+      document.getElementById('settings-privacy').style.display = 'flex';
+    });
+  }
+
+  /* 隐私设置页返回 */
+  const privacyBack = document.querySelector('#settings-privacy .settings-back-btn');
+  if (privacyBack) {
+    privacyBack.addEventListener('click', function () {
+      document.getElementById('settings-privacy').style.display = 'none';
+      document.getElementById('settings-root').style.display = 'flex';
+    });
+  }
+
+  /* 保存新密码 */
+  const pinSaveBtn = document.getElementById('privacy-pin-save-btn');
+  if (pinSaveBtn) {
+    pinSaveBtn.addEventListener('click', function () {
+      const msgEl   = document.getElementById('privacy-pin-msg');
+      const oldVal  = document.getElementById('privacy-old-pin').value;
+      const newVal  = document.getElementById('privacy-new-pin').value;
+      const confVal = document.getElementById('privacy-confirm-pin').value;
+
+      msgEl.style.color = '#e07a7a';
+
+      if (!oldVal || !newVal || !confVal) {
+        msgEl.textContent = '请填写全部字段'; return;
+      }
+      if (!/^\d{6}$/.test(newVal)) {
+        msgEl.textContent = '新密码必须为6位数字'; return;
+      }
+      if (newVal !== confVal) {
+        msgEl.textContent = '两次输入的新密码不一致'; return;
+      }
+      if (!window.LockScreen) {
+        msgEl.textContent = '锁屏模块未加载'; return;
+      }
+      const ok = window.LockScreen.changePin(oldVal, newVal);
+      if (!ok) {
+        msgEl.textContent = '当前密码错误'; return;
+      }
+      msgEl.style.color = '#5aaa7a';
+      msgEl.textContent = '密码已更新';
+      document.getElementById('privacy-old-pin').value  = '';
+      document.getElementById('privacy-new-pin').value  = '';
+      document.getElementById('privacy-confirm-pin').value = '';
+      setTimeout(() => { msgEl.textContent = ''; }, 2000);
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
